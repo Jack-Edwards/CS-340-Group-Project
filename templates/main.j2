@@ -1,8 +1,46 @@
 <html>
     <head>
-        <title>Hello World</title>
+        <title>Corvallis Pizza</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
     </head>
-    <body>
-        <h1>Hello World</h1>
+    <body class="center-text">
+        <h1 class="page-title">Corvallis Pizza</h1>
+        <div class="flexbox">
+            <div class="section margin-5">
+                <h2 class="section-header">Store Functions</h2>
+                <div class="function-section border-gray">
+                    <ul class="function-list left-text">
+                        <li>
+                            <a href="/store/menu">Manage Menu</a>
+                        </li>
+                        <li>
+                            <a href="/store/employees">Manage Employees</a>
+                        </li>
+                        <li>
+                            <a href="/store/duties">Manage Employee Duties</a>
+                        </li>
+                        <li>
+                            <a href="/store/orders">Manage Orders</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section margin-5">
+                <h2 "section-header">Customer Functions</h2>
+                <div class="function-section border-gray">
+                    <ul class="function-list left-text">
+                        <li>
+                            <a href="/customer/menu">View Menu</a>
+                        </li>
+                        <li>
+                            <a href="/customer/new-order">Place Order</a>
+                        </li>
+                        <li>
+                            <a href="/customer/view-order">View Order</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
