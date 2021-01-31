@@ -1,6 +1,6 @@
 from flask import Flask, render_template, json
 import os
-import database.db_connector as db
+#import database.db_connector as db
 
 # Configuration
 
@@ -45,15 +45,15 @@ def store_duty_view_assignments():
 
 @app.route('/store/customer/view')
 def store_customer_view():
-    return render_template('construct.j2')
+    return render_template('store/customers/view-customers.j2')
 
 @app.route('/store/order/view')
 def store_order_view():
-    return render_template('construct.j2')
+    return render_template('store/orders/view-orders.j2')
 
 @app.route('/store/order/edit')
 def store_order_edit():
-    return render_template('construct.j2')
+    return render_template('store/orders/edit-order.j2')
 
 # Routes (Customer)
 
@@ -63,19 +63,19 @@ def customer_menu_view():
 
 @app.route('/customer/customer/add')
 def customer_customer_add():
-    return render_template('construct.j2')
+    return render_template('customer/customer/add-customer.j2')
 
 @app.route('/customer/order/add')
 def customer_order_add():
-    return render_template('construct.j2')
+    return render_template('customer/order/add-order.j2')
 
 @app.route('/customer/order/assign-item')
 def customer_order_assign_item():
-    return render_template('construct.j2')
+    return render_template('customer/order/add-item.j2')
 
 @app.route('/customer/order/view')
 def customer_order_view():
-    return render_template('construct.j2')
+    return render_template('customer/order/view-order.j2')
 
 # Listener
 
