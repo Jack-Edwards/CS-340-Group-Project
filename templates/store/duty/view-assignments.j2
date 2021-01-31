@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>View Assigned Duties</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <a href="/">Return Home</a>
+        <div class="flexbox center-text">
+            <div class="margin-5 border-gray overflow">
+                <h2 class="section-header">Assigned Duty List</h2>
+                <table class="border-collapse margin-5 width-auto">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Duty ID</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
