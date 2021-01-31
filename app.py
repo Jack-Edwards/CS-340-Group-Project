@@ -21,7 +21,7 @@ def store_menu():
 
 @app.route('/store/employees')
 def store_employees():
-    return render_template("construct.j2")
+    return render_template("store/employee.j2")
 
 @app.route('/store/duties')
 def store_duties():

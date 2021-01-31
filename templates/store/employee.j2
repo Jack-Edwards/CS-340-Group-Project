@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <title>Manage Employees</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body class="center-text">
+        <h1 class="page-title">Manage Employees</h1>
+        <div class="flexbox">
+            <div class="entity-list margin-5 border-gray overflow">
+                <h2 class="section-header">Employee List</h2>
+                <div>
+                    <select class="width-fill" name="employees" id="employees" size=5>
+                        <option value="1">Employee One</option>
+                        <option value="2">Employee Two</option>
+                        <option value="3">Employee Three</option>
+                        <option value="4">Employee Four</option>
+                        <option value="5">Employee Five</option>
+                        <option value="6">Employee Six</option>
+                    </select>
+                </div>
+                <div class="margin-5">
+                    <button>View</button>
+                    <button>Delete</button>
+                </div>
+            </div>
+            <div class="margin-5 border-gray text-center">
+                <h2 class="section-header">Update Employee</h2>
+                <form class="margin-5">
+                    <label class="float-left label-top-pad" for="firstname">First Name</label>
+                    <input class="float-right margin-2" type="text" name="firstname" id="firstname" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="lastname">Last Name</label>
+                    <input class="float-right margin-2" type="text" name="lastname" id="lastname" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="phone">Phone Number</label>
+                    <input class="float-right margin-2" type="tel" name="phone" id="phone" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="street">Street</label>
+                    <input class="float-right margin-2" type="text" name="street" id="street" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="city">City</label>
+                    <input class="float-right margin-2" type="text" name="city" id="city" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="zip">ZIP Code</label>
+                    <input class="float-right margin-2" type="tel" name="zip" id="zip" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="state">State</label>
+                    <input class="float-right margin-2" type="text" name="state" id="state" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="roles">Roles</label>
+                    <select class="float-right" name="roles" id="roles" size=2 multiple>
+                        <option value="1">Role One</option>
+                        <option value="2">Role Two</option>
+                        <option value="3">Role Three</option>
+                    </select>
+                    <div style="clear: both;"></div>
+                </form>
+                <div class="margin-5">
+                    <button>Update</button>
+                </div>
+            </div>
+            <div class="margin-5 border-gray text-center">
+                <h2 class="section-header">Add Employee</h2>
+                <form class="margin-5">
+                    <label class="float-left label-top-pad" for="firstname">First Name</label>
+                    <input class="float-right margin-2" type="text" name="firstname" id="firstname" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="lastname">Last Name</label>
+                    <input class="float-right margin-2" type="text" name="lastname" id="lastname" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="phone">Phone Number</label>
+                    <input class="float-right margin-2" type="tel" name="phone" id="phone" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="street">Street</label>
+                    <input class="float-right margin-2" type="text" name="street" id="street" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="city">City</label>
+                    <input class="float-right margin-2" type="text" name="city" id="city" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="zip">ZIP Code</label>
+                    <input class="float-right margin-2" type="tel" name="zip" id="zip" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="state">State</label>
+                    <input class="float-right margin-2" type="text" name="state" id="state" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="roles">Roles</label>
+                    <select class="float-right" name="roles" id="roles" size=2 multiple>
+                        <option value="1">Role One</option>
+                        <option value="2">Role Two</option>
+                        <option value="3">Role Three</option>
+                    </select>
+                    <div style="clear: both;"></div>
+                </form>
+                <div class="margin-5">
+                    <button>Add</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

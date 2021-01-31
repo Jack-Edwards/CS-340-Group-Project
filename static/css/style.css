@@ -12,6 +12,13 @@
     text-align: left;
 }
 
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+
 .function-section {
     width: 400px;
     height: 140px;
@@ -28,12 +35,37 @@
     background-color: lightgray;
 }
 
+.margin-2 {
+    margin: 2px;
+}
+
 .margin-5 {
     margin: 5px;
 }
 
+.data-list > li,
 .function-list > li {
     list-style: none;
     margin-top: 8px;
     margin-bottom: 8px;
+}
+
+.entity-list {
+    width: 300px;
+}
+
+.width-fill {
+    width: 90%;
+}
+
+.overflow {
+    overflow: auto;
+}
+
+.label-top-pad {
+    padding-top: 12px;
+}
+
+.pad-4 {
+    padding: 4px;
 }
