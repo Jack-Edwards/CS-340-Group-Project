@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>View Menu</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <a href="/">Return Home</a>
+        <div class="flexbox center-text">
+            <div class="margin-5 border-gray overflow">
+                <h2 class="section-header">Menu Item List</h2>
+                <table class="border-collapse margin-5 width-auto">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Foo</td>
+                        <td>1.23</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Bar</td>
+                        <td>3.99</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

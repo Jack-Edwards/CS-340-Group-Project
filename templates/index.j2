@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <title>Corvallis Pizza</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body class="center-text">
+        <h1 class="page-title">Corvallis Pizza</h1>
+        <div class="flexbox">
+            <div class="section margin-5">
+                <h2 class="section-header">Store Functions</h2>
+                <div class="function-section border-gray">
+                    <ul class="function-list left-text">
+                        <li>Manage Menu Items
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/store/menu/add">Add Menu Item</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Manage Employees
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/store/employee/add">Add Employee</a>
+                                </li>
+                                <li>
+                                    <a href="/store/employee/view">View All Employees</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Manage Employee Duties
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/store/duty/add">Add Duty</a>
+                                </li>
+                                <li>
+                                    <a href="/store/duty/view">View All Duties</a>
+                                </li>
+                                <li>
+                                    <a href="/store/duty/assign">Assign Employee to Duty</a>
+                                </li>
+                                <li>
+                                    <a href="/store/duty/view-assignments">View & Delete Assigned Duties</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Manage Customers
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="store/customer/view">View All Customers*</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Manage Orders
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/store/order/view">View All Orders*</a>
+                                </li>
+                                <li>
+                                    <a href="/store/order/edit">Edit Order*</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section margin-5">
+                <h2 "section-header">Customer Functions</h2>
+                <div class="function-section border-gray">
+                    <ul class="function-list left-text">
+                        <li>Menu Functions
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/customer/menu/view">View Menu</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Customer Functions
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/customer/customer/add">Add Customer*</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Order Functions
+                            <ul class="function-list left-text">
+                                <li>
+                                    <a href="/customer/order/add">Add Order*</a>
+                                </li>
+                                <li>
+                                    <a href="/customer/order/assign-item">Add Item to Order*</a>
+                                </li>
+                                <li>
+                                    <a href="/customer/order/view">View Order By Customer*</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

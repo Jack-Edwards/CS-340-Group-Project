@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Add Employee</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <a href="/">Return Home</a>
+        <div class="flexbox center-text">
+            <div class="margin-5 border-gray">
+                <h2 class="section-header">Add Employee</h2>
+                <form class="margin-5">
+                    <label class="float-left label-top-pad" for="firstname">First Name</label>
+                    <input class="float-right margin-2" type="text" name="firstname" id="firstname" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="lastname">Last Name</label>
+                    <input class="float-right margin-2" type="text" name="lastname" id="lastname" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="phone">Phone Number</label>
+                    <input class="float-right margin-2" type="tel" name="phone" id="phone" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="street">Street</label>
+                    <input class="float-right margin-2" type="text" name="street" id="street" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="city">City</label>
+                    <input class="float-right margin-2" type="text" name="city" id="city" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="zip">ZIP Code</label>
+                    <input class="float-right margin-2" type="tel" name="zip" id="zip" value="">
+                    <div style="clear: both;"></div>
+
+                    <label class="float-left label-top-pad" for="state">State</label>
+                    <input class="float-right margin-2" type="text" name="state" id="state" value="">
+                    <div style="clear: both;"></div>
+                </form>
+                <div class="margin-5">
+                    <button>Add</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Assign Duty</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <a href="/">Return Home</a>
+        <div class="flexbox center-text">
+            <div class="margin-5 border-gray">
+                <h2 class="section-header">Assign Employee to Duty</h2>
+                <form class="margin-5 flexbox center-text">
+                    <div class="margin-5">
+                        <label for="employee">Employee</label>
+                        <select class="width-fill" name="employee" id="employee" size=5>
+                            <option value="1">Employee One</option>
+                            <option value="2">Employee Two</option>
+                        </select>
+                    </div>
+
+                    <div class="margin-5">
+                        <label for="employee">Duty</label>
+                        <select class="width-fill" name="Duty" id="Duty" size=5>
+                            <option value="1">Duty One</option>
+                            <option value="2">Duty Two</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="margin-5">
+                    <button>Assign</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
