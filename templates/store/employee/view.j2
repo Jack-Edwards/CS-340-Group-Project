@@ -9,36 +9,32 @@
             <div class="margin-5 border-gray overflow">
                 <h2 class="section-header">Employee List</h2>
                 <table class="border-collapse margin-5 width-auto">
-                    <tr>
-                        <th>Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone Number</th>
-                        <th>Street</th>
-                        <th>City</th>
-                        <th>ZIP Code</th>
-                        <th>State</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Foo</td>
-                        <td>Bar</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Flim</td>
-                        <td>Flam</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>ZIP Code</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for employee in employees %}
+                        <tr>
+                            <td>{{ employee.id }}</td>
+                            <td>{{ employee.firstName }}</td>
+                            <td>{{ employee.lastName }}</td>
+                            <td>{{ employee.phone }}</td>
+                            <td>{{ employee.street }}</td>
+                            <td>{{ employee.city }}</td>
+                            <td>{{ employee.zip }}</td>
+                            <td>{{ employee.state }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
