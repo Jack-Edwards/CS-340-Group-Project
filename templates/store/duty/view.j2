@@ -9,25 +9,24 @@
             <div class="margin-5 border-gray overflow">
                 <h2 class="section-header">Duty List</h2>
                 <table class="border-collapse margin-5 width-auto">
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Foo</td>
-                        <td>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Bar</td>
-                        <td>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for duty in duties %}
+                        <tr>
+                            <td>{{ duty.id }}</td>
+                            <td>{{ duty.name }}</td>
+                            <td>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>

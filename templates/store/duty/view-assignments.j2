@@ -14,34 +14,15 @@
                         <th>Duty ID</th>
                         <th>Actions</th>
                     </tr>
+                    {% for assignment in assignments %}
                     <tr>
-                        <td>1</td>
-                        <td>1</td>
+                        <td>{{ assignment.employeeId }}</td>
+                        <td>{{ assignment.dutyId }}</td>
                         <td>
                             <button>Delete</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>
-                            <button>Delete</button>
-                        </td>
-                    </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>

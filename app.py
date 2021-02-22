@@ -1,11 +1,11 @@
 from flask import Flask, render_template, json
 import os
-#import database.db_connector as db
+import database.db_connector as db
 
 # Configuration
 
 app = Flask(__name__)
-#db_connection = db.connect_to_database()
+db_connection = db.connect_to_database()
 
 # Routes
 
@@ -21,7 +21,10 @@ def store_menu_add():
 
 @app.route('/store/employee/view')
 def store_employee_view():
-    return render_template('store/employee/view.j2')
+    query = 'SELECT id, firstName, lastName, phone, street, city, zip, state FROM Employees;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    employees = cursor.fetchall()
+    return render_template('store/employee/view.j2', employees=employees)
 
 @app.route('/store/employee/add')
 def store_employee_add():
@@ -29,7 +32,10 @@ def store_employee_add():
 
 @app.route('/store/duty/view')
 def store_duty_view():
-    return render_template('store/duty/view.j2')
+    query = 'SELECT id, name FROM Duties;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    duties = cursor.fetchall()
+    return render_template('store/duty/view.j2', duties=duties)
 
 @app.route('/store/duty/add')
 def store_duty_add():
@@ -41,7 +47,10 @@ def store_duty_assign():
 
 @app.route('/store/duty/view-assignments')
 def store_duty_view_assignments():
-    return render_template('store/duty/view-assignments.j2')
+    query = 'SELECT employeeId, dutyId FROM EmployeeDuties;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    assignments = cursor.fetchall()
+    return render_template('store/duty/view-assignments.j2', assignments=assignments)
 
 @app.route('/store/customer/view')
 def store_customer_view():
@@ -59,7 +68,10 @@ def store_order_edit():
 
 @app.route('/customer/menu/view')
 def customer_menu_view():
-    return render_template('customer/menu/view.j2')
+    query = 'SELECT id, name, price FROM Items;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    items = cursor.fetchall()
+    return render_template('customer/menu/view.j2', menu_items=items)
 
 @app.route('/customer/customer/add')
 def customer_customer_add():
