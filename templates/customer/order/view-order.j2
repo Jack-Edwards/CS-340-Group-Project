@@ -1,55 +1,45 @@
 <html>
-<head>
-    <title>Lookup Order</title>
-    <style>
-        body {
-            background-color: #ADADAD;
-        }
+    <head>
+        <title>View OrderItems</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <a href="/">Return Home</a>
 
-        .center {
-            text-align: center;
-
-        }
-
-        table {
-            margin: 0 auto;
-            border: 3px solid green;
-            width: 800px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <a href="/">Return Home</a>
-    <div class="center"> 
-        <h1>View Order-Items By Order ID</h1>
+        <div style="width: 500px;margin: auto;">
+        <h1>Filter Order-Items By Order ID</h1>
         <form action="">
             <label for="orderID">Enter Order ID:</label>
             <input type="text" id="orderID" name="orderID"><br><br>
 
             <input type="submit" value="Submit">
         </form>
+        </div>
 
-        <table>
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Item ID</th>
-                        <th>Quantity</th>
-                    </tr>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
 
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>2</td>
-                    </tr>
-            </table>
-    </div>
-</body>
+        <div class="flexbox center-text">
+
+            <div class="margin-5 border-gray overflow">
+                <h2 class="section-header">OrderItems List</h2>
+                <table class="border-collapse margin-5 width-auto">
+                    <thead>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Item Id</th>
+                            <th>Quanitity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for orderItem in orderItems_list %}
+                        <tr>
+                            <td>{{ orderItem.orderId }}</td>
+                            <td>{{ orderItem.itemId }}</td>
+                            <td>{{ orderItem.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
 </html>
