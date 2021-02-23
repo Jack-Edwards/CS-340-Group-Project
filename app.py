@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json
+from flask import Flask, render_template, json, request
 import os
 import database.db_connector as db
 
@@ -79,27 +79,59 @@ def customer_menu_view():
     items = cursor.fetchall()
     return render_template('customer/menu/view.j2', menu_items=items)
 
-@app.route('/customer/customer/add')
+@app.route('/customer/customer/add', methods = ['GET', 'POST'])
 def customer_customer_add():
+    if request.method == 'POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        phone = request.form['phone']
+        street = request.form['street']
+        city = request.form['city']
+        zip_code = request.form['zip']
+        state = request.form['state']
+        data = (fname, lname, phone, street, city, zip_code, state)
+        query = "INSERT INTO Customers (firstName, lastName, phone, street, city, zip, state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
     return render_template('customer/customer/add-customer.j2')
 
-@app.route('/customer/order/add')
+@app.route('/customer/order/add', methods = ['GET', 'POST'])
 def customer_order_add():
+    if request.method == 'POST':
+        cid = request.form['customerid']
+        street = request.form['street']
+        city = request.form['city']
+        zip_code = request.form['zip']
+        state = request.form['state']
+        data = (int(cid), street, city, zip_code, state)
+        query = "INSERT INTO Orders (customerId, street, city, zip, state) VALUES (%d, '%s', '%s', '%s', '%s');" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
     return render_template('customer/order/add-order.j2')
 
-@app.route('/customer/order/assign-item')
+@app.route('/customer/order/assign-item', methods = ['GET', 'POST'])
 def customer_order_assign_item():
+    if request.method == 'POST':
+        oid = request.form['orderid']
+        item_id = request.form['itemid']
+        quantity = request.form['quantity']
+        data = (int(oid), int(item_id), int(quantity))
+        query = "INSERT INTO OrderItems (orderId, itemId, quantity) VALUES (%d, %d, %d);" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
     return render_template('customer/order/add-item.j2')
 
-@app.route('/customer/order/view')
+@app.route('/customer/order/view', methods = ['GET', 'POST'])
 def customer_order_view():
-    query = 'SELECT orderId, itemId, quantity FROM OrderItems;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    orderItems = cursor.fetchall()
+    if request.method == 'POST':
+        oid = int(request.form['orderID'])
+        query = 'SELECT orderId, itemId, quantity FROM OrderItems WHERE orderId=%d;' % oid 
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        orderItems = cursor.fetchall()
+    elif request.method == 'GET':
+        query = 'SELECT orderId, itemId, quantity FROM OrderItems;'
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        orderItems = cursor.fetchall()
     return render_template('customer/order/view-order.j2', orderItems_list = orderItems)
 
 # Listener
-
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 9999))
     app.run(port=port, debug=True)
