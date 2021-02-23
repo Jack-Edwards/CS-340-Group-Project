@@ -1,63 +1,42 @@
 <html>
-<head>
-    <title>View Customers</title>
-    <style>
-        .center {
-            text-align: center;
-
-        }
-
-        table {
-            margin: 0 auto;
-            border: 3px solid green;
-            width: 600px;
-            text-align: center;
-        }
-
-        body {
-            background-color: #ADADAD;
-        }
-    </style>
-</head>
-<body>
-    <a href="/">Return Home</a>
-    <div class="center"> 
-        <h1>Customers List</h1>
-        <table>
-                <thead>
-                    <tr>
-                        <th>Customer ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone</th>
-                        <th>Street</th>
-                        <th>City</th>
-                        <th>Zip</th>
-                        <th>State</th>
-                    </tr>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>John</td>
-                        <td>James</td>
-                        <td>111-111-1111</td>
-                        <td>Main st</td>
-                        <td>Denver</td>
-                        <td>12345</td>
-                        <td>Colorado</td>
-                    </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>James</td>
-                        <td>Jones</td>
-                        <td>222-222-2222</td>
-                        <td>Main st</td>
-                        <td>Denver</td>
-                        <td>12345</td>
-                        <td>Colorado</td>
-                    </tr>
-            </table>
-    </div>
-</body>
+    <head>
+        <title>View Customers</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <a href="/">Return Home</a>
+        <div class="flexbox center-text">
+            <div class="margin-5 border-gray overflow">
+                <h2 class="section-header">Customer List</h2>
+                <table class="border-collapse margin-5 width-auto">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>Zip</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for person in customers_list %}
+                        <tr>
+                            <td>{{ person.id }}</td>
+                            <td>{{ person.firstName }}</td>
+                            <td>{{ person.lastName }}</td>
+                            <td>{{ person.phone }}</td>
+                            <td>{{ person.street }}</td>
+                            <td>{{ person.city }}</td>
+                            <td>{{ person.zip }}</td>
+                            <td>{{ person.state }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
 </html>

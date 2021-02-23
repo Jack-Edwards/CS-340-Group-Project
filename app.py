@@ -54,11 +54,17 @@ def store_duty_view_assignments():
 
 @app.route('/store/customer/view')
 def store_customer_view():
-    return render_template('store/customers/view-customers.j2')
+    query = 'SELECT id, firstName, lastName, phone, street, city, zip, state FROM Customers;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    customers = cursor.fetchall()
+    return render_template('store/customers/view-customers.j2', customers_list = customers)
 
 @app.route('/store/order/view')
 def store_order_view():
-    return render_template('store/orders/view-orders.j2')
+    query = 'SELECT id, customerId, employeeDriverId, status, statusTime, street, city, zip, state FROM Orders;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    orders = cursor.fetchall()
+    return render_template('store/orders/view-orders.j2', orders_list = orders)
 
 @app.route('/store/order/edit')
 def store_order_edit():
@@ -87,7 +93,10 @@ def customer_order_assign_item():
 
 @app.route('/customer/order/view')
 def customer_order_view():
-    return render_template('customer/order/view-order.j2')
+    query = 'SELECT orderId, itemId, quantity FROM OrderItems;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    orderItems = cursor.fetchall()
+    return render_template('customer/order/view-order.j2', orderItems_list = orderItems)
 
 # Listener
 
