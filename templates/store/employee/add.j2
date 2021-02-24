@@ -8,7 +8,7 @@
         <div class="flexbox center-text">
             <div class="margin-5 border-gray">
                 <h2 class="section-header">Add Employee</h2>
-                <form class="margin-5">
+                <form class="margin-5" action="/store/employee/add" method="post">
                     <label class="float-left label-top-pad" for="firstname">First Name</label>
                     <input class="float-right margin-2" type="text" name="firstname" id="firstname" value="">
                     <div style="clear: both;"></div>
@@ -36,10 +36,8 @@
                     <label class="float-left label-top-pad" for="state">State</label>
                     <input class="float-right margin-2" type="text" name="state" id="state" value="">
                     <div style="clear: both;"></div>
+                    <input type="submit" value="Submit">
                 </form>
-                <div class="margin-5">
-                    <button>Add</button>
-                </div>
             </div>
         </div>
     </body>
