@@ -6,11 +6,17 @@
     <body>
         <a href="/">Return Home</a>
 
-        <div style="width: 500px;margin: auto;">
+        <div style="width: 500px;margin: auto;text-align:center;">
         <h1>Filter Order-Items By Order ID</h1>
         <form  action="/customer/order/view" method="post">
-            <label for="orderID">Enter Order ID:</label>
-            <input type="text" id="orderID" name="orderID"><br><br>
+            <label for="orderID">Select Order ID:</label>
+            <select name="orderID"> 
+                {% for i in ids %} 
+                    <option value="{{ i.id }}"> {{ i.id }} </option>
+                {% endfor %}
+            </select>
+            
+            <br><br>
 
             <input type="submit" value="Submit">
         </form>
@@ -26,7 +32,9 @@
                         <tr>
                             <th>Order Id</th>
                             <th>Item Id</th>
-                            <th>Quanitity</th>
+                            <th>Item Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +42,8 @@
                         <tr>
                             <td>{{ orderItem.orderId }}</td>
                             <td>{{ orderItem.itemId }}</td>
+                            <td>{{ orderItem.name }}</td>
+                            <td>{{ orderItem.price }}</td>
                             <td>{{ orderItem.quantity }}</td>
                         </tr>
                         {% endfor %}
