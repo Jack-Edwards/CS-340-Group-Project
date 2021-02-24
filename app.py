@@ -15,8 +15,15 @@ def index():
 
 # Routes (Store)
 
-@app.route('/store/menu/add')
+@app.route('/store/menu/add', methods = ['GET', 'POST'])
 def store_menu_add():
+    if request.method == 'POST':
+        name = request.form['name']
+        price = request.form['price']
+        data = (name, price)
+        query = "INSERT INTO Items (name, price) VALUES ('%s', '%s');" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
     return render_template('store/menu/add.j2')
 
 @app.route('/store/employee/view')
@@ -26,8 +33,20 @@ def store_employee_view():
     employees = cursor.fetchall()
     return render_template('store/employee/view.j2', employees=employees)
 
-@app.route('/store/employee/add')
+@app.route('/store/employee/add', methods = ['GET', 'POST'])
 def store_employee_add():
+    if request.method == 'POST':
+        first_name = request.form['firstname']
+        last_name = request.form['lastname']
+        phone = request.form['phone']
+        street = request.form['street']
+        city = request.form['city']
+        zip_code = request.form['zip']
+        state = request.form['state']
+        data = (first_name, last_name, phone, street, city, zip_code, state)
+        query = "INSERT INTO Employees (firstName, lastName, phone, street, city, zip, state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
     return render_template('store/employee/add.j2')
 
 @app.route('/store/duty/view')
@@ -37,13 +56,33 @@ def store_duty_view():
     duties = cursor.fetchall()
     return render_template('store/duty/view.j2', duties=duties)
 
-@app.route('/store/duty/add')
+@app.route('/store/duty/add', methods = ['GET', 'POST'])
 def store_duty_add():
+    if request.method == 'POST':
+        name = request.form['name']
+        data = (name)
+        query = "INSERT INTO Duties (name) VALUES ('%s');" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
     return render_template('store/duty/add.j2')
 
-@app.route('/store/duty/assign')
+@app.route('/store/duty/assign', methods = ['GET', 'POST'])
 def store_duty_assign():
-    return render_template('store/duty/assign.j2')
+    if request.method == 'POST':
+        employee_id = request.form['employee']
+        duty_id = request.form['duty']
+        data = (employee_id, duty_id)
+        query = "INSERT IGNORE INTO EmployeeDuties (employeeId, dutyId) VALUES ('%s', '%s');" % data
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
+    employee_query = 'SELECT id, firstName, lastName FROM Employees;'
+    cursor = db.execute_query(db_connection=db_connection, query=employee_query)
+    employees = cursor.fetchall()
+
+    duty_query = 'SELECT id, name FROM Duties;'
+    cursor = db.execute_query(db_connection=db_connection, query=duty_query)
+    duties = cursor.fetchall()
+    return render_template('store/duty/assign.j2', employees=employees, duties=duties)
 
 @app.route('/store/duty/view-assignments')
 def store_duty_view_assignments():

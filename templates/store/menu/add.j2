@@ -8,7 +8,7 @@
         <div class="flexbox center-text">
             <div class="margin-5 border-gray">
                 <h2 class="section-header">Add Menu Item</h2>
-                <form class="margin-5">
+                <form class="margin-5" action="/store/menu/add" method="post">
                     <label class="float-left label-top-pad" for="name">Name</label>
                     <input class="float-right margin-2" type="text" name="name" id="name" value="">
                     <div style="clear: both;"></div>
@@ -16,10 +16,8 @@
                     <label class="float-left label-top-pad" for="price">Price</label>
                     <input class="float-right margin-2" type="number" step="0.01" name="price" id="price" value="0.00">
                     <div style="clear: both;"></div>
+                    <input type="submit" value="Submit">
                 </form>
-                <div class="margin-5">
-                    <button>Add</button>
-                </div>
             </div>
         </div>
     </body>
