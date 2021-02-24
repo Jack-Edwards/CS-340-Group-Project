@@ -7,10 +7,8 @@
             left: 45%;
             width: 300px;
             text-align: left;
-        }
-
-        body {
-            background-color: #ADADAD;
+            border: 2px solid grey;
+            padding-left:50px;
         }
 
     </style>
@@ -21,7 +19,13 @@
         <h1>Add Order</h1>
         <form action="/customer/order/add" method="post">
             <label for="customerid">Customer ID:</label>
-            <input type="text" id="customerid" name="customerid"><br> <br>
+            <select name="customerid"> 
+                {% for c in customers_list %} 
+                    <option value="{{ c.id }}"> {{ c.id }} {{ c.firstName }} {{ c.lastName }}</option>
+                {% endfor %}
+            </select>
+            
+            <br> <br>
 
             <label for="street">Street:</label>
             <input type="text" id="street" name="street"><br> <br>

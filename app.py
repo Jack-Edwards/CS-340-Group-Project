@@ -144,7 +144,11 @@ def customer_order_add():
         data = (int(cid), street, city, zip_code, state)
         query = "INSERT INTO Orders (customerId, street, city, zip, state) VALUES (%d, '%s', '%s', '%s', '%s');" % data
         cursor = db.execute_query(db_connection=db_connection, query=query)
-    return render_template('customer/order/add-order.j2')
+
+    query = 'SELECT id, firstName, lastName FROM Customers;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    customers = cursor.fetchall()
+    return render_template('customer/order/add-order.j2', customers_list = customers)
 
 @app.route('/customer/order/assign-item', methods = ['GET', 'POST'])
 def customer_order_assign_item():
@@ -155,20 +159,33 @@ def customer_order_assign_item():
         data = (int(oid), int(item_id), int(quantity))
         query = "INSERT INTO OrderItems (orderId, itemId, quantity) VALUES (%d, %d, %d);" % data
         cursor = db.execute_query(db_connection=db_connection, query=query)
-    return render_template('customer/order/add-item.j2')
+
+    query = 'SELECT id from Orders ORDER BY id ASC;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    orders = cursor.fetchall()
+
+    query = 'SELECT id, name FROM Items;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    items = cursor.fetchall()
+    
+    return render_template('customer/order/add-item.j2', orders=orders, items=items)
 
 @app.route('/customer/order/view', methods = ['GET', 'POST'])
 def customer_order_view():
     if request.method == 'POST':
         oid = int(request.form['orderID'])
-        query = 'SELECT orderId, itemId, quantity FROM OrderItems WHERE orderId=%d;' % oid 
+        query = 'Select OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id WHERE orderId=%d;' % oid 
         cursor = db.execute_query(db_connection=db_connection, query=query)
         orderItems = cursor.fetchall()
     elif request.method == 'GET':
-        query = 'SELECT orderId, itemId, quantity FROM OrderItems;'
+        query = 'Select OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id;'
         cursor = db.execute_query(db_connection=db_connection, query=query)
         orderItems = cursor.fetchall()
-    return render_template('customer/order/view-order.j2', orderItems_list = orderItems)
+
+    query = 'SELECT id from Orders ORDER BY id ASC;'
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    ids = cursor.fetchall()
+    return render_template('customer/order/view-order.j2', orderItems_list = orderItems, ids=ids)
 
 # Listener
 if __name__ == '__main__':

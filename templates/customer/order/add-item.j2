@@ -7,10 +7,8 @@
             left: 45%;
             width: 300px;
             text-align: left;
-        }
-
-        body {
-            background-color: #ADADAD;
+            border: 2px solid grey;
+            padding-left:50px;
         }
 
     </style>
@@ -21,10 +19,22 @@
         <h1>Add Item to Order</h1>
         <form action="/customer/order/assign-item" method="post">
             <label for="orderid">Order ID:</label>
-            <input type="text" id="orderid" name="orderid"><br> <br>
+            <select name="orderid"> 
+                {% for o in orders %} 
+                    <option value="{{ o.id }}"> {{ o.id }} </option>
+                {% endfor %}
+            </select>
+            
+            <br> <br>
 
-            <label for="itemid">Item ID:</label>
-            <input type="text" id="orderid" name="itemid"><br> <br>
+            <label for="itemid">Item:</label>
+            <select name="itemid"> 
+                {% for i in items %} 
+                    <option value="{{ i.id }}"> {{ i.name }} </option>
+                {% endfor %}
+            </select>
+            
+            <br> <br>
 
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" name="quantity"><br> <br>
