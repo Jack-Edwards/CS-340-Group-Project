@@ -1,11 +1,18 @@
 from flask import Flask, render_template, json, request
 import os
+from functools import wraps
 import database.db_connector as db
 
 # Configuration
 
 app = Flask(__name__)
-db_connection = db.connect_to_database()
+
+def connect_to_database(function):
+    @wraps(function)
+    def wrap_function(*args, **kwargs):
+        connection = db.connect_to_database()
+        return function(connection, *args, **kwargs)
+    return wrap_function
 
 # Routes
 
@@ -16,7 +23,8 @@ def index():
 # Routes (Store)
 
 @app.route('/store/menu/add', methods = ['GET', 'POST'])
-def store_menu_add():
+@connect_to_database
+def store_menu_add(db_connection):
     if request.method == 'POST':
         name = request.form['name']
         price = request.form['price']
@@ -27,14 +35,16 @@ def store_menu_add():
     return render_template('store/menu/add.j2')
 
 @app.route('/store/employee/view')
-def store_employee_view():
+@connect_to_database
+def store_employee_view(db_connection):
     query = 'SELECT id, firstName, lastName, phone, street, city, zip, state FROM Employees;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     employees = cursor.fetchall()
     return render_template('store/employee/view.j2', employees=employees)
 
 @app.route('/store/employee/add', methods = ['GET', 'POST'])
-def store_employee_add():
+@connect_to_database
+def store_employee_add(db_connection):
     if request.method == 'POST':
         first_name = request.form['firstname']
         last_name = request.form['lastname']
@@ -50,14 +60,16 @@ def store_employee_add():
     return render_template('store/employee/add.j2')
 
 @app.route('/store/duty/view')
-def store_duty_view():
+@connect_to_database
+def store_duty_view(db_connection):
     query = 'SELECT id, name FROM Duties;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     duties = cursor.fetchall()
     return render_template('store/duty/view.j2', duties=duties)
 
 @app.route('/store/duty/add', methods = ['GET', 'POST'])
-def store_duty_add():
+@connect_to_database
+def store_duty_add(db_connection):
     if request.method == 'POST':
         name = request.form['name']
         data = (name)
@@ -67,7 +79,8 @@ def store_duty_add():
     return render_template('store/duty/add.j2')
 
 @app.route('/store/duty/assign', methods = ['GET', 'POST'])
-def store_duty_assign():
+@connect_to_database
+def store_duty_assign(db_connection):
     if request.method == 'POST':
         employee_id = request.form['employee']
         duty_id = request.form['duty']
@@ -85,21 +98,24 @@ def store_duty_assign():
     return render_template('store/duty/assign.j2', employees=employees, duties=duties)
 
 @app.route('/store/duty/view-assignments')
-def store_duty_view_assignments():
+@connect_to_database
+def store_duty_view_assignments(db_connection):
     query = 'SELECT employeeId, dutyId FROM EmployeeDuties;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     assignments = cursor.fetchall()
     return render_template('store/duty/view-assignments.j2', assignments=assignments)
 
 @app.route('/store/customer/view')
-def store_customer_view():
+@connect_to_database
+def store_customer_view(db_connection):
     query = 'SELECT id, firstName, lastName, phone, street, city, zip, state FROM Customers;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     customers = cursor.fetchall()
     return render_template('store/customers/view-customers.j2', customers_list = customers)
 
 @app.route('/store/order/view')
-def store_order_view():
+@connect_to_database
+def store_order_view(db_connection):
     query = 'SELECT id, customerId, employeeDriverId, status, statusTime, street, city, zip, state FROM Orders;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     orders = cursor.fetchall()
@@ -112,14 +128,16 @@ def store_order_edit():
 # Routes (Customer)
 
 @app.route('/customer/menu/view')
-def customer_menu_view():
+@connect_to_database
+def customer_menu_view(db_connection):
     query = 'SELECT id, name, price FROM Items;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     items = cursor.fetchall()
     return render_template('customer/menu/view.j2', menu_items=items)
 
 @app.route('/customer/customer/add', methods = ['GET', 'POST'])
-def customer_customer_add():
+@connect_to_database
+def customer_customer_add(db_connection):
     if request.method == 'POST':
         fname = request.form['fname']
         lname = request.form['lname']
@@ -134,7 +152,8 @@ def customer_customer_add():
     return render_template('customer/customer/add-customer.j2')
 
 @app.route('/customer/order/add', methods = ['GET', 'POST'])
-def customer_order_add():
+@connect_to_database
+def customer_order_add(db_connection):
     if request.method == 'POST':
         cid = request.form['customerid']
         street = request.form['street']
@@ -151,7 +170,8 @@ def customer_order_add():
     return render_template('customer/order/add-order.j2', customers_list = customers)
 
 @app.route('/customer/order/assign-item', methods = ['GET', 'POST'])
-def customer_order_assign_item():
+@connect_to_database
+def customer_order_assign_item(db_connection):
     if request.method == 'POST':
         oid = request.form['orderid']
         item_id = request.form['itemid']
@@ -171,7 +191,8 @@ def customer_order_assign_item():
     return render_template('customer/order/add-item.j2', orders=orders, items=items)
 
 @app.route('/customer/order/view', methods = ['GET', 'POST'])
-def customer_order_view():
+@connect_to_database
+def customer_order_view(db_connection):
     if request.method == 'POST':
         oid = int(request.form['orderID'])
         query = 'Select OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id WHERE orderId=%d;' % oid 
