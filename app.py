@@ -1,18 +1,11 @@
-from flask import Flask, render_template, json, request
 import os
-from functools import wraps
-import database.db_connector as db
+from flask import Flask, render_template
+from routes.store import store_menu_routes, store_employee_routes, store_duty_routes, store_customer_routes, store_order_routes
+from routes.customer import customer_customer_routes, customer_order_routes, customer_menu_routes
 
 # Configuration
 
 app = Flask(__name__)
-
-def connect_to_database(function):
-    @wraps(function)
-    def wrap_function(*args, **kwargs):
-        connection = db.connect_to_database()
-        return function(connection, *args, **kwargs)
-    return wrap_function
 
 # Routes
 
@@ -22,191 +15,17 @@ def index():
 
 # Routes (Store)
 
-@app.route('/store/menu/add', methods = ['GET', 'POST'])
-@connect_to_database
-def store_menu_add(db_connection):
-    if request.method == 'POST':
-        name = request.form['name']
-        price = request.form['price']
-        data = (name, price)
-        query = "INSERT INTO Items (name, price) VALUES ('%s', '%s');" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    return render_template('store/menu/add.j2')
-
-@app.route('/store/employee/view')
-@connect_to_database
-def store_employee_view(db_connection):
-    query = 'SELECT id, firstName, lastName, phone, street, city, zip, state FROM Employees;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    employees = cursor.fetchall()
-    return render_template('store/employee/view.j2', employees=employees)
-
-@app.route('/store/employee/add', methods = ['GET', 'POST'])
-@connect_to_database
-def store_employee_add(db_connection):
-    if request.method == 'POST':
-        first_name = request.form['firstname']
-        last_name = request.form['lastname']
-        phone = request.form['phone']
-        street = request.form['street']
-        city = request.form['city']
-        zip_code = request.form['zip']
-        state = request.form['state']
-        data = (first_name, last_name, phone, street, city, zip_code, state)
-        query = "INSERT INTO Employees (firstName, lastName, phone, street, city, zip, state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    return render_template('store/employee/add.j2')
-
-@app.route('/store/duty/view')
-@connect_to_database
-def store_duty_view(db_connection):
-    query = 'SELECT id, name FROM Duties;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    duties = cursor.fetchall()
-    return render_template('store/duty/view.j2', duties=duties)
-
-@app.route('/store/duty/add', methods = ['GET', 'POST'])
-@connect_to_database
-def store_duty_add(db_connection):
-    if request.method == 'POST':
-        name = request.form['name']
-        data = (name)
-        query = "INSERT INTO Duties (name) VALUES ('%s');" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    return render_template('store/duty/add.j2')
-
-@app.route('/store/duty/assign', methods = ['GET', 'POST'])
-@connect_to_database
-def store_duty_assign(db_connection):
-    if request.method == 'POST':
-        employee_id = request.form['employee']
-        duty_id = request.form['duty']
-        data = (employee_id, duty_id)
-        query = "INSERT IGNORE INTO EmployeeDuties (employeeId, dutyId) VALUES ('%s', '%s');" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    employee_query = 'SELECT id, firstName, lastName FROM Employees;'
-    cursor = db.execute_query(db_connection=db_connection, query=employee_query)
-    employees = cursor.fetchall()
-
-    duty_query = 'SELECT id, name FROM Duties;'
-    cursor = db.execute_query(db_connection=db_connection, query=duty_query)
-    duties = cursor.fetchall()
-    return render_template('store/duty/assign.j2', employees=employees, duties=duties)
-
-@app.route('/store/duty/view-assignments')
-@connect_to_database
-def store_duty_view_assignments(db_connection):
-    query = 'SELECT employeeId, dutyId FROM EmployeeDuties;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    assignments = cursor.fetchall()
-    return render_template('store/duty/view-assignments.j2', assignments=assignments)
-
-@app.route('/store/customer/view')
-@connect_to_database
-def store_customer_view(db_connection):
-    query = 'SELECT id, firstName, lastName, phone, street, city, zip, state FROM Customers;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    customers = cursor.fetchall()
-    return render_template('store/customers/view-customers.j2', customers_list = customers)
-
-@app.route('/store/order/view')
-@connect_to_database
-def store_order_view(db_connection):
-    query = 'SELECT id, customerId, employeeDriverId, status, statusTime, street, city, zip, state FROM Orders;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    orders = cursor.fetchall()
-    return render_template('store/orders/view-orders.j2', orders_list = orders)
-
-@app.route('/store/order/edit')
-def store_order_edit():
-    return render_template('store/orders/edit-order.j2')
+app.register_blueprint(store_menu_routes, url_prefix='/store/menu')
+app.register_blueprint(store_employee_routes, url_prefix='/store/employee')
+app.register_blueprint(store_duty_routes, url_prefix='/store/duty')
+app.register_blueprint(store_customer_routes, url_prefix='/store/customer')
+app.register_blueprint(store_order_routes, url_prefix='/store/order')
 
 # Routes (Customer)
 
-@app.route('/customer/menu/view')
-@connect_to_database
-def customer_menu_view(db_connection):
-    query = 'SELECT id, name, price FROM Items;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    items = cursor.fetchall()
-    return render_template('customer/menu/view.j2', menu_items=items)
-
-@app.route('/customer/customer/add', methods = ['GET', 'POST'])
-@connect_to_database
-def customer_customer_add(db_connection):
-    if request.method == 'POST':
-        fname = request.form['fname']
-        lname = request.form['lname']
-        phone = request.form['phone']
-        street = request.form['street']
-        city = request.form['city']
-        zip_code = request.form['zip']
-        state = request.form['state']
-        data = (fname, lname, phone, street, city, zip_code, state)
-        query = "INSERT INTO Customers (firstName, lastName, phone, street, city, zip, state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-    return render_template('customer/customer/add-customer.j2')
-
-@app.route('/customer/order/add', methods = ['GET', 'POST'])
-@connect_to_database
-def customer_order_add(db_connection):
-    if request.method == 'POST':
-        cid = request.form['customerid']
-        street = request.form['street']
-        city = request.form['city']
-        zip_code = request.form['zip']
-        state = request.form['state']
-        data = (int(cid), street, city, zip_code, state)
-        query = "INSERT INTO Orders (customerId, street, city, zip, state) VALUES (%d, '%s', '%s', '%s', '%s');" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    query = 'SELECT id, firstName, lastName FROM Customers;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    customers = cursor.fetchall()
-    return render_template('customer/order/add-order.j2', customers_list = customers)
-
-@app.route('/customer/order/assign-item', methods = ['GET', 'POST'])
-@connect_to_database
-def customer_order_assign_item(db_connection):
-    if request.method == 'POST':
-        oid = request.form['orderid']
-        item_id = request.form['itemid']
-        quantity = request.form['quantity']
-        data = (int(oid), int(item_id), int(quantity))
-        query = "INSERT INTO OrderItems (orderId, itemId, quantity) VALUES (%d, %d, %d);" % data
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    query = 'SELECT id from Orders ORDER BY id ASC;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    orders = cursor.fetchall()
-
-    query = 'SELECT id, name FROM Items;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    items = cursor.fetchall()
-    
-    return render_template('customer/order/add-item.j2', orders=orders, items=items)
-
-@app.route('/customer/order/view', methods = ['GET', 'POST'])
-@connect_to_database
-def customer_order_view(db_connection):
-    if request.method == 'POST':
-        oid = int(request.form['orderID'])
-        query = 'Select OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id WHERE orderId=%d;' % oid 
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        orderItems = cursor.fetchall()
-    elif request.method == 'GET':
-        query = 'Select OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id;'
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        orderItems = cursor.fetchall()
-
-    query = 'SELECT id from Orders ORDER BY id ASC;'
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    ids = cursor.fetchall()
-    return render_template('customer/order/view-order.j2', orderItems_list = orderItems, ids=ids)
+app.register_blueprint(customer_customer_routes, url_prefix='/customer/customer')
+app.register_blueprint(customer_order_routes, url_prefix='/customer/order')
+app.register_blueprint(customer_menu_routes, url_prefix='/customer/menu')
 
 # Listener
 if __name__ == '__main__':
