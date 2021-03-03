@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from . import store_duty_routes
 from routes import connect_to_database
 import database.db_connector as db
@@ -48,3 +48,13 @@ def store_duty_view_assignments(db_connection):
     cursor = db.execute_query(db_connection=db_connection, query=query)
     assignments = cursor.fetchall()
     return render_template('store/duty/view-assignments.j2', assignments=assignments)
+
+@store_duty_routes.route('/delete/<int:id>', methods= ['POST'])
+@connect_to_database
+def store_duty_delete(db_connection, id):
+    delete_from_employee_duties = 'DELETE FROM EmployeeDuties WHERE dutyId = %s';
+    db.execute_query(db_connection=db_connection, query=delete_from_employee_duties, query_params=[id])
+
+    delete_from_duties = 'DELETE FROM Duties WHERE id = %s;'
+    db.execute_query(db_connection=db_connection, query=delete_from_duties, query_params=[id])
+    return redirect(url_for('store_duty_routes.store_duty_view'))
