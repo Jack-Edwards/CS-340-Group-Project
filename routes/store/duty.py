@@ -49,7 +49,7 @@ def store_duty_view_assignments(db_connection):
     assignments = cursor.fetchall()
     return render_template('store/duty/view-assignments.j2', assignments=assignments)
 
-@store_duty_routes.route('/delete/<int:id>', methods= ['POST'])
+@store_duty_routes.route('/delete/<int:id>', methods = ['POST'])
 @connect_to_database
 def store_duty_delete(db_connection, id):
     delete_from_employee_duties = 'DELETE FROM EmployeeDuties WHERE dutyId = %s';
@@ -58,3 +58,10 @@ def store_duty_delete(db_connection, id):
     delete_from_duties = 'DELETE FROM Duties WHERE id = %s;'
     db.execute_query(db_connection=db_connection, query=delete_from_duties, query_params=[id])
     return redirect(url_for('store_duty_routes.store_duty_view'))
+
+@store_duty_routes.route('/delete-assignment/<int:dutyId>/<int:employeeId>', methods = ['POST'])
+@connect_to_database
+def store_duty_delete_assignment(db_connection, dutyId, employeeId):
+    query = 'DELETE FROM EmployeeDuties WHERE dutyId = %s AND employeeId = %s;'
+    db.execute_query(db_connection=db_connection, query=query, query_params=[dutyId, employeeId])
+    return redirect(url_for('store_duty_routes.store_duty_view_assignments'))
