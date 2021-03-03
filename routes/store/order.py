@@ -15,8 +15,8 @@ def store_order_view(db_connection):
 def store_order_edit(id):
     db_connection = db.connect_to_database()
     if request.method == 'GET':
-        order_query = 'SELECT id, customerId, status, street, city, zip, state FROM Orders WHERE id = %s;' % (id)
-        order_cursor = db.execute_query(db_connection=db_connection, query=order_query)
+        order_query = 'SELECT id, customerId, status, street, city, zip, state FROM Orders WHERE id = %s;'
+        order_cursor = db.execute_query(db_connection=db_connection, query=order_query, query_params=[id])
         order = order_cursor.fetchone()
 
         drivers_query = "SELECT Employees.id, Employees.firstName, Employees.lastName FROM Employees INNER JOIN EmployeeDuties ON Employees.id = EmployeeDuties.employeeId INNER JOIN Duties ON EmployeeDuties.dutyId = Duties.id WHERE Duties.name = 'Driver';"
