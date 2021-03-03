@@ -52,11 +52,8 @@ def store_duty_view_assignments(db_connection):
 @store_duty_routes.route('/delete/<int:id>', methods = ['POST'])
 @connect_to_database
 def store_duty_delete(db_connection, id):
-    delete_from_employee_duties = 'DELETE FROM EmployeeDuties WHERE dutyId = %s';
-    db.execute_query(db_connection=db_connection, query=delete_from_employee_duties, query_params=[id])
-
-    delete_from_duties = 'DELETE FROM Duties WHERE id = %s;'
-    db.execute_query(db_connection=db_connection, query=delete_from_duties, query_params=[id])
+    query = 'DELETE FROM Duties WHERE id = %s;'
+    db.execute_query(db_connection=db_connection, query=query, query_params=[id])
     return redirect(url_for('store_duty_routes.store_duty_view'))
 
 @store_duty_routes.route('/delete-assignment/<int:dutyId>/<int:employeeId>', methods = ['POST'])
