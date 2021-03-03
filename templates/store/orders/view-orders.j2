@@ -20,6 +20,7 @@
                             <th>City</th>
                             <th>Zip</th>
                             <th>State</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                             <td>{{ order.city }}</td>
                             <td>{{ order.zip }}</td>
                             <td>{{ order.state }}</td>
+                            <td><a href="/store/order/edit/{{order.id}}"><button>Update</button></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
