@@ -37,16 +37,30 @@
             <label for="driverid">Driver ID:</label>
             <select name="driverid"> 
                 {% for driver in drivers %} 
-                    <option value="{{ driver.id }}"> {{ driver.id }} {{ driver.firstName }} {{ driver.lastName }}</option>
+                    {% if driver.id == order.employeeDriverId %}
+                        <option selected value ="{{ driver.id }}"> {{ driver.id }} {{ driver.firstName }} {{ driver.lastName }} </option>
+                    {% else %}
+                        <option value ="{{ driver.id }}"> {{ driver.id }} {{ driver.firstName }} {{ driver.lastName }} </option>
+                    {% endif %}
                 {% endfor %}
             </select>
             <br> <br>
 
             <label for="orderstatus">Order Status:</label>
             <select name="orderstatus" id="orderstatus">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
+                {% if order.status == 1 %}
+                    <option value="0">0</option>
+                    <option selected value="1">1</option>
+                    <option value="2">2</option>
+                {% elif order.status == 2 %}
+                    <option value="0">0</option>
+                    <option selected ="1">1</option>
+                    <option selected value="2">2</option>
+                {% else %}
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                {% endif %}
             </select>
             <br><br>
 
