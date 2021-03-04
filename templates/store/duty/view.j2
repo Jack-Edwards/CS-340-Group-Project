@@ -22,7 +22,9 @@
                             <td>{{ duty.id }}</td>
                             <td>{{ duty.name }}</td>
                             <td>
-                                <button>Delete</button>
+                            <form class="margin-0" action="/store/duty/delete/{{ duty.id }}" method="post">
+                                <button name="delete" value="delete">Delete</button>
+                            </form>
                             </td>
                         </tr>
                         {% endfor %}
