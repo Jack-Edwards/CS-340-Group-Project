@@ -15,7 +15,7 @@ def store_order_view(db_connection):
 def store_order_edit(id):
     db_connection = db.connect_to_database()
     if request.method == 'GET':
-        order_query = 'SELECT id, customerId, status, street, city, zip, state FROM Orders WHERE id = %s;'
+        order_query = 'SELECT id, customerId, employeeDriverId, status, street, city, zip, state FROM Orders WHERE id = %s;'
         order_cursor = db.execute_query(db_connection=db_connection, query=order_query, query_params=[id])
         order = order_cursor.fetchone()
 
