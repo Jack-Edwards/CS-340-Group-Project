@@ -37,9 +37,14 @@ def store_order_edit(id):
         city = request.form['city']
         zip_code = request.form['zip']
         state = request.form['state']
-        
+
         query = "UPDATE Orders SET customerId=%s, employeeDriverId=%s, status=%s, statusTime = CURRENT_TIMESTAMP, street=%s, city=%s, zip=%s, state=%s WHERE id=%s;"
-        data = [int(customer_id), int(driver_id), int(status), street, city, zip_code, state, int(order_id)]
+
+        if driver_id == "":
+            data = [int(customer_id), None, int(status), street, city, zip_code, state, int(order_id)]
+        else:
+            data = [int(customer_id), int(driver_id), int(status), street, city, zip_code, state, int(order_id)]
+            
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=data)
 
         orders_query = 'SELECT id, customerId, employeeDriverId, status, statusTime, street, city, zip, state FROM Orders;'

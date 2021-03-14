@@ -36,6 +36,7 @@
 
             <label for="driverid">Driver ID:</label>
             <select name="driverid"> 
+                <option value="">Null</option>
                 {% for driver in drivers %} 
                     {% if driver.id == order.employeeDriverId %}
                         <option selected value ="{{ driver.id }}"> {{ driver.id }} {{ driver.firstName }} {{ driver.lastName }} </option>
