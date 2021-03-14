@@ -96,3 +96,7 @@ td {
 .pad-4 {
     padding: 4px;
 }
+
+.hide {
+    display: none;
+}

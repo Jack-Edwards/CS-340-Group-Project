@@ -10,16 +10,20 @@
                 <h2 class="section-header">Assigned Duty List</h2>
                 <table class="border-collapse margin-5 width-auto">
                     <tr>
-                        <th>Employee ID</th>
-                        <th>Duty ID</th>
+                        <th class="hide">Employee ID</th>
+                        <th>Employee Name</th>
+                        <th class="hide">Duty ID</th>
+                        <th>Duty Name</th>
                         <th>Actions</th>
                     </tr>
                     {% for assignment in assignments %}
                     <tr>
-                        <td>{{ assignment.employeeId }}</td>
-                        <td>{{ assignment.dutyId }}</td>
+                        <td class="hide">{{ assignment.id }}</td>
+                        <td>{{ assignment.firstName }} {{ assignment.lastName }}</td>
+                        <td class="hide">{{ assignment['Duties.id'] }}</td>
+                        <td>{{ assignment.name }}</td>
                         <td>
-                        <form class="margin-0" action="/store/duty/delete-assignment/{{ assignment.dutyId }}/{{ assignment.employeeId }}" method="post">
+                        <form class="margin-0" action="/store/duty/delete-assignment/{{ assignment['Duties.id'] }}/{{ assignment.id }}" method="post">
                             <button name="delete" value="delete">Delete</button>
                         </form>
                         </td>
