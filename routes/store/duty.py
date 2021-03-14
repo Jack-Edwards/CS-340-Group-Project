@@ -49,7 +49,6 @@ def store_duty_view_assignments(db_connection):
         'INNER JOIN Duties on EmployeeDuties.dutyId = Duties.id;'
     cursor = db.execute_query(db_connection=db_connection, query=query)
     assignments = cursor.fetchall()
-    print(assignments)
     return render_template('store/duty/view-assignments.j2', assignments=assignments)
 
 @store_duty_routes.route('/delete/<int:id>', methods = ['POST'])
