@@ -47,7 +47,7 @@ def customer_order_assign_item(db_connection):
 def customer_order_view(db_connection):
     if request.method == 'POST':
         oid = [int(request.form['orderID'])]
-        query = 'SELECT OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id WHERE orderId=%d;'
+        query = 'SELECT OrderItems.orderId, OrderItems.itemId, Items.name, Items.price, OrderItems.quantity FROM OrderItems INNER JOIN Items ON OrderItems.itemId = Items.id WHERE orderId=%s;'
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=oid)
         orderItems = cursor.fetchall()
     elif request.method == 'GET':
